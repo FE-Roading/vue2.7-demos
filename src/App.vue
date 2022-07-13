@@ -1,20 +1,36 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <img alt="Vue logo" src="./assets/logo.png" />
+    <HelloWorld @search="onSearch1" v-model="leftSearch1" />
+    <span>v-model value in parent: {{ leftSearch1 }}</span>
+    <HelloWorld @search="onSearch2" :value="leftSearch2" @update:value="leftSearch2 = $event"  />
+    <span>v-model value in parent: {{ leftSearch2 }}</span>
+    <HelloWorld @search="onSearch3" :modelValue="leftSearch3" @update:modelValue="leftSearch3 = $event" />
+    <span>v-model value in parent: {{ leftSearch3 }}</span>
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from './components/HelloWorld.vue';
+<script lang="ts" setup>
+import { ref } from "vue";
+import HelloWorld from "./components/HelloWorld.vue";
 
-@Component({
-  components: {
-    HelloWorld,
-  },
-})
-export default class App extends Vue {}
+const leftSearch1 = ref("");
+const leftSearch2 = ref("");
+const leftSearch3 = ref("");
+
+
+function onSearch1(val?: string) {
+  console.log(val, leftSearch1.value);
+}
+
+function onSearch2(val?: string) {
+  console.log(val, leftSearch2.value);
+}
+
+function onSearch3(val?: string) {
+  console.log(val, leftSearch3.value);
+}
+
 </script>
 
 <style lang="scss">
